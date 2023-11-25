@@ -1,0 +1,60 @@
+# load libraries
+library('tidyverse')
+library('arrow')
+
+# print current R version
+print(R.version.string)
+
+# read in dummy data (feather format)
+df_input <- arrow::read_feather(
+  here::here("output", "input.feather"),
+  #col_select = c(sex, age)
+  )
+
+# read rds data (output and input)
+df_out <- df_input
+readr::write_rds(df_out,
+                 here::here("output", "mydata.rds"),
+                 compress = "gz")
+# object <- readr::read_rds(here::here("output", "mydata.rds"))
+
+# read in dummy data (csv format)
+# df_input <-  read_csv(
+#   here::here("output", "input.csv.gz"),
+#   col_types = cols(patient_id = col_integer(),age = col_double())
+# )
+
+# read rds data (output and input)
+plot_age <- ggplot(data=df_input, aes(age)) + geom_histogram()
+ggsave(
+  plot= plot_age,
+  filename="histo_age.png", path=here::here("output"),
+)
+
+# Create the pyramid-like plot with facets for each region
+plot_age_pyramid_regions <- df_input %>%
+filter(region %in% c("London", "West Midlands")) %>%
+  group_by(age, sex, region) %>%
+  summarise(count = n()) %>%
+  mutate(count = ifelse(sex == "M", -count, count)) %>%
+  ggplot(aes(x = age, y = count, fill = sex)) +
+  geom_bar(stat = "identity", position = "identity", width = 2, color = "black") +
+  scale_fill_manual(values = c("M" = "blue", "F" = "green")) +
+  labs(title = "Age Pyramid of 2 Regions", x = "Age", y = "Count") +
+  theme_minimal() +
+  coord_flip() +
+  facet_wrap(~ region, ncol = 2) +
+  scale_x_continuous(breaks = seq(min(df_input$age), max(df_input$age), by = 10)) +
+  scale_y_continuous(breaks = seq(-5, 5, by = 1)) +
+  labs(y = "Count") +
+  theme(
+    plot.background = element_rect(fill = "white"),
+    panel.background = element_rect(fill = "white"),
+    panel.grid.major = element_line(color = "gray90"),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave(
+  plot= plot_age_pyramid_regions,
+  filename="age_pyramid_regions.png", path=here::here("output"),
+)

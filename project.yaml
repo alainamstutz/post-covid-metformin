@@ -1,12 +1,21 @@
 version: '3.0'
 
-# Ignore this`expectation` block. It is required but not used, and will be removed in future versions.
 expectations:
   population_size: 1000
 
 actions:
-  generate_dataset:
-    run: ehrql:v0 generate-dataset analysis/dataset_definition.py --output output/dataset.csv.gz
+
+  generate_study_population:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition --output-format feather
     outputs:
       highly_sensitive:
-        dataset: output/dataset.csv.gz
+        cohort: output/input.feather
+
+  describe:
+    run: r:latest analysis/post-covid-metformin.R
+    needs: [generate_study_population]
+    outputs:
+      moderately_sensitive:
+        cohort: output/age_pyramid_regions.png
+      highly_sensitive:
+        cohort: output/mydata.rds
