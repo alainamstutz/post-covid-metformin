@@ -16,6 +16,7 @@ df_out <- df_input
 readr::write_rds(df_out,
                  here::here("output", "mydata.rds"),
                  compress = "gz")
+
 # object <- readr::read_rds(here::here("output", "mydata.rds"))
 
 # read in dummy data (csv format)
@@ -24,7 +25,9 @@ readr::write_rds(df_out,
 #   col_types = cols(patient_id = col_integer(),age = col_double())
 # )
 
-# read rds data (output and input)
+# age histogram
+table(df_input$imd, useNA = "always")
+table(df_input$metformin_3mths, useNA = "always")
 plot_age <- ggplot(data=df_input, aes(age)) + geom_histogram()
 ggsave(
   plot= plot_age,

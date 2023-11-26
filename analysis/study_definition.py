@@ -14,7 +14,7 @@ np.random.seed(123456)
 
 from codelists import *
 
-start_date  = "2020-09-01" ## difference between index_date and start_date?
+start_date  = "2020-09-01" # difference between index_date and start_date? Why not simply using index_date below?
 
 def days_before(s, days):
     date = datetime.strptime(s, "%Y-%m-%d")
@@ -30,15 +30,16 @@ study = StudyDefinition(
         },
    
     # define the study index date
-    index_date = "2020-09-01", ## difference between index_date and start_date?
+    index_date = "2020-09-01", # difference between index_date and start_date?
 
     # define the study population
     population=patients.satisfying(
+        # t2dm = 1 ??? Why - and feather dataset contains t2dm == FALSE and TRUE
         """
         has_follow_up 
         AND (sex = "M" OR sex = "F")
         AND imd > 0
-        AND t2dm = 1
+        AND t2dm = 1 
         """
         ,
         has_follow_up=patients.registered_with_one_practice_between(
