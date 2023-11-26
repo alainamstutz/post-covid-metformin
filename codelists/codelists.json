@@ -1,3 +1,16 @@
 {
-  "files": {}
+  "files": {
+    "opensafely-type-2-diabetes.csv": {
+      "id": "opensafely/type-2-diabetes/2020-06-29",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/type-2-diabetes/2020-06-29/",
+      "downloaded_at": "2023-11-25 13:52:07.522338Z",
+      "sha": "21a0fd8e041c19abd876970d75b389b6904dc901"
+    },
+    "user-john-tazare-metformin-dmd.csv": {
+      "id": "user/john-tazare/metformin-dmd/48e43356",
+      "url": "https://codelists.opensafely.org/codelist/user/john-tazare/metformin-dmd/48e43356/",
+      "downloaded_at": "2023-11-25 13:52:08.711272Z",
+      "sha": "368a1601e4bfbed05c48b624663d05cbeb1787c0"
+    }
+  }
 }
