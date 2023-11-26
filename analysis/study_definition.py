@@ -37,9 +37,9 @@ study = StudyDefinition(
         """
         has_follow_up 
         AND (sex = "M" OR sex = "F")
+        AND imd > 0
+        AND t2dm = 1
         """
-        #AND imd > 0
-        #AND t2dm = 1 
         ,
         has_follow_up=patients.registered_with_one_practice_between(
             "2019-09-01", "2020-09-01"
