@@ -37,7 +37,7 @@ study = StudyDefinition(
         # t2dm = 1 ??? Why - and feather dataset contains t2dm == FALSE and TRUE
         """
         has_follow_up 
-        AND (sex = "M" OR sex = "F")
+        AND (sex = "M")
         AND imd > 0
         AND t2dm = 1 
         """
